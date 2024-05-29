@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">To Do</string>
+    <string name="title_activity_home_screen">HomeScreenActivity</string>
+    <string name="title_activity_edit_task">EditTaskActivity</string>
+</resources>
