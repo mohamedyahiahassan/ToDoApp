@@ -1,6 +1,7 @@
 package com.example.domain.contract
 
 import com.example.todo.model.database.Task
+import kotlinx.coroutines.flow.Flow
 
 interface DatabaseRepository {
 
@@ -10,7 +11,7 @@ interface DatabaseRepository {
 
     suspend fun deleteTask(task: Task)
 
-    suspend fun getAllTasks():List<Task>
+    suspend fun getAllTasks(): Flow<MutableList<Task>>
 
     suspend fun getTaskById(id:Int):Task
 }

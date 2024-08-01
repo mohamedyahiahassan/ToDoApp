@@ -107,6 +107,12 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
 
+    // Data Store
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+
+
+
+
 }
 
 kapt {

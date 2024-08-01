@@ -4,6 +4,8 @@ import com.example.domain.contract.DatabaseRepository
 import com.example.todo.model.database.Task
 import com.example.todo.model.database.TaskDao
 import com.example.todo.model.database.TasksDataBase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(private val tasksDataBase: TasksDataBase):DatabaseRepository {
@@ -25,9 +27,11 @@ class RepositoryImpl @Inject constructor(private val tasksDataBase: TasksDataBas
         tasksDataBase.tasksDao().deleteTask(task)
     }
 
-    override suspend fun getAllTasks(): List<Task> {
+    override suspend fun getAllTasks(): Flow<MutableList<Task>>  = flow {
 
-       return tasksDataBase.tasksDao().getAllTasks()
+       val listOfTasks =  tasksDataBase.tasksDao().getAllTasks()
+
+        emit(listOfTasks)
     }
 
     override suspend fun getTaskById(id: Int): Task {

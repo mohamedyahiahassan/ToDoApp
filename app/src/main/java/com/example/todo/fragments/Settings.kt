@@ -16,6 +16,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,29 +25,32 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.todo.R
 import com.example.todo.TaskViewModel
-import com.example.todo.ThemeViewModel
-import com.example.todo.ToDo.Companion.prefs
 import com.example.todo.ui.theme.bluePrimary
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsTab(themeViewModel: ThemeViewModel,taskViewModel: TaskViewModel) {
+fun SettingsTab(viewModel: TaskViewModel,changeDarkMode:(value:Boolean)->Unit) {
 
-    var switchState by remember { themeViewModel.isDarkThemeEnabled }
 
     var isDropDownMenuExpanded by rememberSaveable {
         mutableStateOf<Boolean>(false)
     }
 
-    var selectedMenuItem by remember {
-        mutableStateOf<String>("Light")
+    val context = LocalContext.current
+
+
+
+    LaunchedEffect(key1 = Unit) {
+
+        viewModel.readDarkModeState(context)
     }
 
     Column(
@@ -76,17 +80,12 @@ fun SettingsTab(themeViewModel: ThemeViewModel,taskViewModel: TaskViewModel) {
         ) {
 
             OutlinedTextField(
-                value = selectedMenuItem,
+                value = viewModel.selectedMenuItem.value?:"Light",
                 onValueChange = {},
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
                     .menuAnchor(),
                 trailingIcon = {
-
-                   /* ExposedDropdownMenuDefaults.TrailingIcon(
-                        expanded =isDropDownMenuExpanded)
-
-                    */
                     Image(
                         painter = painterResource(id = R.drawable.dropdown_arrow),
                         contentDescription = "drop down arrow",
@@ -112,45 +111,34 @@ fun SettingsTab(themeViewModel: ThemeViewModel,taskViewModel: TaskViewModel) {
             ExposedDropdownMenu(
                 expanded = isDropDownMenuExpanded,
                 onDismissRequest = { isDropDownMenuExpanded = false },
-                modifier = Modifier.fillMaxWidth(1f)
+                modifier = Modifier
+                    .fillMaxWidth(1f)
                     .background(Color.White)
             ) {
 
                 DropdownMenuItem(
                     text = {
-                        Text(text = "Light")
+                        Text(text = "Light", color = Color.Black)
                     },
-                 //   colors = MenuDefaults.itemColors(),
+
                     onClick = {
                         isDropDownMenuExpanded = false
-                        selectedMenuItem = "Light"
+                        viewModel.changeModeState(context,false)
 
-                        switchState = !switchState
-                        prefs?.themeDark = switchState
+                        changeDarkMode(false)
+
                               },
                 )
 
                 DropdownMenuItem(
                     text = {
-                        Text(text = "Dark")
+                        Text(text = "Dark", color = Color.Black)
                     },
                     onClick = {
                         isDropDownMenuExpanded = false
-                        selectedMenuItem = "Dark"
+                        viewModel.changeModeState(context,true)
 
-                        switchState = !switchState
-                        prefs?.themeDark = switchState
-
-                    })
-
-                DropdownMenuItem(
-                    text = {
-                        Text(text = "System")
-                    },
-                    onClick = {
-                        isDropDownMenuExpanded = false
-                        selectedMenuItem = "Dark"
-
+                        changeDarkMode(true)
                     })
 
 

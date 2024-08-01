@@ -83,7 +83,7 @@ fun AddTaskBottomSheet(
 
         TaskTextField(
             textFieldInput = viewModel.inputNewTaskDesc,
-            placeHolderText = "enter your task",
+            placeHolderText = "enter the description",
             errorMessage = viewModel.inputNewTaskDescError)
 
         Spacer(modifier = Modifier.height(20.dp))
