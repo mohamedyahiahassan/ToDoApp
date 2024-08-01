@@ -36,7 +36,6 @@ import com.example.todo.TaskViewModel
 import com.example.todo.ui.theme.bluePrimary
 import com.example.todo.utils.AddTaskBottomSheet
 import com.example.todo.utils.AddToDoButton
-import com.example.todo.utils.BottomNavBar
 import com.example.todo.utils.TaskTopAppBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
