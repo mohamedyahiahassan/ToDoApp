@@ -1,8 +1,13 @@
 package com.example.todo
 
+import android.content.Context
 import  android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.datastore.dataStore
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,6 +21,8 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
@@ -25,9 +32,8 @@ class TaskViewModel @Inject constructor(private val repository: DatabaseReposito
 
     val selectedDay = mutableStateOf<String?>(SelectedDay.selectedDay)
 
-    val listOfTasks = mutableStateListOf<Task>()
-
     val selectedDayList = mutableStateListOf<Task>()
+
 
 
     // input a new task
@@ -71,6 +77,7 @@ class TaskViewModel @Inject constructor(private val repository: DatabaseReposito
     var isDateSet = false
 
 
+    var selectedMenuItem = mutableStateOf<String?>(null)
 
 
     fun textFieldValidation():Boolean{
@@ -113,7 +120,12 @@ class TaskViewModel @Inject constructor(private val repository: DatabaseReposito
 
             val selectedDate = changeStringDateToLong(selectedDay.value!!)
 
-            val listOfToDos = repository.getAllTasks()
+            val listOfToDos = mutableListOf<Task>()
+
+            repository.getAllTasks().collect{
+
+                listOfToDos.addAll(it)
+            }
 
             selectedDayList.clear()
 
@@ -121,10 +133,7 @@ class TaskViewModel @Inject constructor(private val repository: DatabaseReposito
 
                     it.dateTime == selectedDate
             })
-
-
         }
-
     }
 
     fun editTask(id:Int){
@@ -169,8 +178,9 @@ class TaskViewModel @Inject constructor(private val repository: DatabaseReposito
                 taskName = inputNewTaskName.value,
                 taskDesc = inputNewTaskDesc.value,
                 dateTime = date))
+           getTasks()
 
-            getTasks()
+
         }
 
         inputNewTaskName.value = ""
@@ -184,7 +194,8 @@ class TaskViewModel @Inject constructor(private val repository: DatabaseReposito
             repository.deleteTask(selectedDayList[indexTask])
 
         }
-        getTasks()
+
+        selectedDayList.remove(selectedDayList[indexTask])
 
     }
 
@@ -236,6 +247,56 @@ class TaskViewModel @Inject constructor(private val repository: DatabaseReposito
         mDay = editTaskDate.value!!.substring(0,2).toInt()
 
         isDateSet = true
+    }
+
+    fun getTodayDate(){
+
+        val calendar = Calendar.getInstance()
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        val todayDate = calendar.timeInMillis
+
+         selectedDay.value = changeLongDateToString(todayDate)
+
+
+    }
+
+    fun readDarkModeState(context:Context){
+
+       viewModelScope.launch {
+
+           val isDark = ToDoDataStore(context).readDarkMode()
+
+           if (isDark == true){
+
+               selectedMenuItem.value = "Dark"
+           } else {
+
+               selectedMenuItem.value = "Light"
+           }
+       }
+    }
+
+    fun changeModeState(context:Context,value:Boolean){
+
+        viewModelScope.launch {
+
+            ToDoDataStore(context).changeDark(value)
+
+            if (value == true){
+
+                selectedMenuItem.value = "Dark"
+            } else {
+
+                selectedMenuItem.value = "Light"
+            }
+
+            Log.e("dark", ToDoDataStore(context).readDarkMode().toString())
+        }
     }
 
 
