@@ -4,13 +4,39 @@ The Todo application offers users a flexible tool for organizing their tasks. Us
 
 The app was built using Room, Jetpack Compose, Android Navigation Component and Repository Pattern.
 
-<img src="https://github.com/mohamedyahiahassan/ToDoApp/assets/147698012/fa4c2802-e482-4beb-bb0e-c6997d539594" width="250" />
+# Built With 🛠
 
-<img src="https://github.com/mohamedyahiahassan/ToDoApp/assets/147698012/41ed66ee-6c31-48fe-9b5d-9b60528d2548" width="250" />
+* Kotlin : A modern programming language for Android development.
+* Android Architecture Components : Collection of libraries that help you design robust, testable, and maintainable apps.
 
-<img src="https://github.com/mohamedyahiahassan/ToDoApp/assets/147698012/df95c004-4981-4ffe-a2fa-03f4699f00dc" width="250" />
+   * ViewModel : Stores UI-related data that isn't destroyed on UI changes.
+   * Navigation component : Navigation refers to the interactions that allow users to navigate across, into, and back out from the different pieces of content within your app.
+  
+* Room Database: No SQL Database to save data internally in a local database.
+* Dagger Hilt : dependency injection library for Android that reduces the boilerplate of doing manual dependency injection in your project.
+* Kotlin coroutines : Coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously.
 
-<img src="https://github.com/mohamedyahiahassan/ToDoApp/assets/147698012/72927d54-7153-496c-9fa3-0a4e760bb008" width="250" />
+# Screenshots
 
-<img src="https://github.com/mohamedyahiahassan/ToDoApp/assets/147698012/9cd0030f-e5ee-4de6-9495-cc9e8968b0df" width="250" />
+<img src="https://github.com/user-attachments/assets/0644fe97-f9db-46aa-b899-32a00799161f" width="250" />
+
+<img src="https://github.com/user-attachments/assets/642ed90e-aca6-4f61-80a5-b487071362ee" width="250" />
+
+<img src="https://github.com/user-attachments/assets/644dbfb7-f5d3-4a2e-96f5-db33eb2e46ab" width="250" />
+
+<img src="https://github.com/user-attachments/assets/3b3d0f9e-e494-4635-974a-9f3d9bba15fe" width="250" />
+
+<img src="https://github.com/user-attachments/assets/e5d407ce-cfd7-4fc0-b70a-b7815707fc8a" width="250" />
+
+
+
+<img src="https://github.com/user-attachments/assets/651589a8-7976-4b31-ba35-69e74421dd0f" width="250" />
+
+<img src="https://github.com/user-attachments/assets/50323c96-6ec5-47cc-98ef-c1a586b90398" width="250" />
+
+<img src="https://github.com/user-attachments/assets/3bad847b-cf9d-4e36-b6e9-5513af0d470a" width="250" />
+
+<img src="https://github.com/user-attachments/assets/e4519520-b9a0-4c58-af14-b18235617aa8" width="250" />
+
+<img src="https://github.com/user-attachments/assets/2303af8d-1492-43d5-87f6-8f684a1f1277" width="250" />
 
